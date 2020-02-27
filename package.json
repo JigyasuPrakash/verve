@@ -1,0 +1,23 @@
+{
+  "name": "verve",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JigyasuPrakash/Verve.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JigyasuPrakash/Verve/issues"
+  },
+  "homepage": "https://github.com/JigyasuPrakash/Verve#readme",
+  "dependencies": {
+    "p5": "^0.10.2"
+  }
+}
