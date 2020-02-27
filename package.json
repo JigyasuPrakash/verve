@@ -17,7 +17,5 @@
     "url": "https://github.com/JigyasuPrakash/Verve/issues"
   },
   "homepage": "https://github.com/JigyasuPrakash/Verve#readme",
-  "dependencies": {
-    "p5": "^0.10.2"
-  }
+  "dependencies": {}
 }
