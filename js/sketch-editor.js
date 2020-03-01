@@ -99,54 +99,80 @@ function drawGrid() {
     }
 }
 
-var coordinates = [];
-var end = false;
+var polyCoordinates = [];
+var endPoly = false;
+var rectCoordinates = [];
+var endRect = false;
 
 function mouseClicked() {
+    x = mouseX;
+    y = mouseY;
     if (polygon && mouseX > 0 && mouseY > 0 && mouseX < editorCanvas.width && mouseY < editorCanvas.height) {
-        x = mouseX;
-        y = mouseY;
-
-        if (coordinates.length > 1) {
-            if ((x - 15) < coordinates[0].x && (x + 15) > coordinates[0].x && (y - 15) < coordinates[0].y && (y + 15) > coordinates[0].y) {
-                x = coordinates[0].x;
-                y = coordinates[0].y;
-                end = true;
+        if (polyCoordinates.length > 1) {
+            if ((x - 15) < polyCoordinates[0].x && (x + 15) > polyCoordinates[0].x && (y - 15) < polyCoordinates[0].y && (y + 15) > polyCoordinates[0].y) {
+                x = polyCoordinates[0].x;
+                y = polyCoordinates[0].y;
+                endPoly = true;
                 polygon = false;
             }
         }
-        coordinates[coordinates.length] = { x, y };
+        polyCoordinates[polyCoordinates.length] = { x, y };
+    }
+    if (rectangle && mouseX > 0 && mouseY > 0 && mouseX < editorCanvas.width && mouseY < editorCanvas.height) {
+        //click sense for rectangle mode
+        if (rectCoordinates.length > 0) {
+            rectangle = false;
+            endRect = true;
+        }
+        rectCoordinates[rectCoordinates.length] = { x, y };
     }
 
 }
 
 function draw() {
-
+    clear();
     background(245);
     drawGrid();
-
+    //rect(0,0,100,20);
     stroke(100);
-    if (coordinates.length > 0 && !end) {
-        line(coordinates[coordinates.length - 1].x, coordinates[coordinates.length - 1].y, mouseX, mouseY);
+    if (polygon || endPoly) {
+        drawPolygon();
+    } else if (rectangle || endRect) {
+        noFill();
+        drawRectangle();
     }
-
-    if (coordinates.length > 0) {
-        for (let i = 0; i < coordinates.length - 1; i++) {
-            circle(coordinates[i + 1].x, coordinates[i + 1].y, 15);
-            line(coordinates[i].x, coordinates[i].y, coordinates[i + 1].x, coordinates[i + 1].y);
-        }
-        console.log(coordinates);
-    }
-
 }
 
+function drawPolygon() {
+    if (polyCoordinates.length > 0 && !endPoly) {
+        line(polyCoordinates[polyCoordinates.length - 1].x, polyCoordinates[polyCoordinates.length - 1].y, mouseX, mouseY);
+    }
 
+    if (polyCoordinates.length > 0) {
+        for (let i = 0; i < polyCoordinates.length - 1; i++) {
+            circle(polyCoordinates[i + 1].x, polyCoordinates[i + 1].y, 15);
+            line(polyCoordinates[i].x, polyCoordinates[i].y, polyCoordinates[i + 1].x, polyCoordinates[i + 1].y);
+        }
+    }
+}
+
+function drawRectangle() {
+    if (rectCoordinates.length > 0 && !endRect) {
+        console.log("Runtime");
+        rect(rectCoordinates[0].x, rectCoordinates[0].y, mouseX - rectCoordinates[0].x, mouseY - rectCoordinates[0].y);
+    }
+    if (rectCoordinates.length === 2) {
+        rect(rectCoordinates[0].x, rectCoordinates[0].y, rectCoordinates[1].x - rectCoordinates[0].x, rectCoordinates[1].y - rectCoordinates[0].y);
+    }
+}
 
 
 
 // Non p5 functions
 function clearAll() {
-    coordinates = [];
-    end = false;
+    polyCoordinates = [];
+    endPoly = false;
+    rectCoordinates = [];
+    endRect = false;
     selectMode('cursor');
 }
