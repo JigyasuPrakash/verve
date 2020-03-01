@@ -1,1 +1,48 @@
-<!-- Here all drag and drop feature would be implmented -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css">
+
+    <title>Editor | Verve</title>
+    <!-- p5 library import -->
+    <script src="../library/p5.min.js"></script>
+    <script src="../assets/js/sketch-editor.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="row">
+            <!-- Header goes here -->
+        </div>
+        <div class="row">
+            <div class="col-xl-2" id="pannel">
+                <button class="btn" id="cursor-btn" onclick="selectMode('cursor')">Cursor <i
+                        class="fas fa-mouse-pointer"></i></button>
+                <button class="btn" id="polygon-btn" onclick="selectMode('polygon')">Draw polygon <i
+                        class="far fa-draw-polygon"></i></button>
+                <button class="btn" id="eraser-btn" onclick="selectMode('eraser')">Eraser <i
+                        class="fas fa-eraser"></i></button>
+            </div>
+
+            <div class="col-xl-8">
+                <center>
+                    <div id="sketch-holder"></div>
+                </center>
+            </div>
+
+            <div class="col-xl-2">
+                <button class="btn btn-success" onclick="clearAll()">Clear All <i
+                        class="fas fa-chalkboard"></i></button>
+                <button class="btn btn-success" onclick="saveArt()">Save <i class="far fa-save"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
