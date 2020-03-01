@@ -49,6 +49,15 @@ function selectMode(mode) {
     }
 }
 
+function drawGrid() {
+    for (var x = 0; x < width; x += width / 60) {
+        for (var y = 0; y < height; y += height / 45) {
+            stroke(230);
+            line(x, 0, x, height);
+            line(0, y, width, y);
+        }
+    }
+}
 
 var coordinates = [];
 var end = false;
@@ -59,10 +68,11 @@ function mouseClicked() {
         y = mouseY;
 
         if (coordinates.length > 1) {
-            if ((x - 8) < coordinates[0].x && (x + 8) > coordinates[0].x && (y - 8) < coordinates[0].y && (y + 8) > coordinates[0].y) {
+            if ((x - 10) < coordinates[0].x && (x + 10) > coordinates[0].x && (y - 10) < coordinates[0].y && (y + 10) > coordinates[0].y) {
                 x = coordinates[0].x;
                 y = coordinates[0].y;
                 end = true;
+                polygon = false;
             }
         }
         coordinates[coordinates.length] = { x, y };
@@ -72,8 +82,10 @@ function mouseClicked() {
 
 function draw() {
 
-    background(235);
+    background(245);
+    drawGrid();
 
+    stroke(150);
     if (coordinates.length > 0 && !end) {
         line(coordinates[coordinates.length - 1].x, coordinates[coordinates.length - 1].y, mouseX, mouseY);
     }
@@ -94,7 +106,8 @@ function draw() {
 
 // Non p5 functions
 function clearAll() {
-
+    coordinates = [];
+    end = false;
 }
 
 function saveArt() {
