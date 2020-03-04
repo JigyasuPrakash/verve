@@ -243,11 +243,9 @@ function midPointSubdivision(x1, y1, x2, y2) {
 
     switch (v) {
         case 0:
-            myLineCoordinates[0].x = x1;
-            myLineCoordinates[0].y = y1;
-            myLineCoordinates[1].x = x2;
-            myLineCoordinates[1].y = y2;
-
+            clear();
+            // rect(rectCoordinates[0].x,rectCoordinates[0].y, rectCoordinates[1].x, rectCoordinates[1].y);
+            // line(x1,y1,x2,y2);
             break;
 
         case 1:
@@ -302,7 +300,7 @@ function findAnd(pcode1, pcode2) {
     var pcode = [];
     for (var i = 0; i < 4; i++) {
         if (pcode1[i] === 1 && pcode2[i] === 1) {
-            pcode[i] = 1
+            pcode[i] = 1;
         } else if (pcode1[i] != pcode2[i]) {
             pcode[i] = 0;
         } else if (pcode1[i] === 0 && pcode2[i] === 0) {
