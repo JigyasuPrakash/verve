@@ -202,3 +202,145 @@ function clearAll() {
     endMyLine = false;
     selectMode('cursor');
 }
+
+
+function startSimulation() {
+    console.log(myLineCoordinates);
+    console.log(rectCoordinates);
+    cohenSutherland(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
+}
+
+
+
+function cohenSutherland(x1, y1, x2, y2) {
+    pcode1 = findOutCode(x1, y1);
+    pcode2 = findOutCode(x2, y2);
+
+    console.log(pcode1);
+    console.log(pcode2);
+
+    if (findVisibility(pcode1, pcode2) === 0) {
+        console.log('fully visible');
+        line(x1, y1, x2, y2);
+    } else if (findVisibility(pcode1, pcode2) === 2) {
+        midPointSubdivision(x1, y1, x2, y2);
+    }
+
+}
+
+
+function midPointSubdivision(x1, y1, x2, y2) {
+
+    console.log(x1 + " " + y1 + " " + x2 + " " + y2);
+    var ym;
+    var xm;
+
+    var p1 = findOutCode(x1, y1);
+    var p2 = findOutCode(x2, y2);
+
+    var v = findVisibility(p1, p2);
+    console.log(v);
+
+    switch (v) {
+        case 0:
+            myLineCoordinates[0].x = x1;
+            myLineCoordinates[0].y = y1;
+            myLineCoordinates[1].x = x2;
+            myLineCoordinates[1].y = y2;
+
+            break;
+
+        case 1:
+            break;
+
+        case 2:
+            xm = x1 + (x2 - x1) / 2;
+            ym = y1 + (y2 - y1) / 2;
+
+            console.log("x1, y1");
+
+            midPointSubdivision(x1, y1, xm, ym);
+
+            xm = xm + 1;
+            ym = ym + 1;
+
+            console.log("x2, y2");
+
+            midPointSubdivision(xm, ym, x2, y2);
+
+            break;
+    }
+    return 0;
+
+}
+
+function findVisibility(pcode1, pcode2) {
+    var vis = 0;
+
+    var andOfPcode = findAnd(pcode1, pcode2);
+
+    console.log(andOfPcode);
+
+    if (!pcode1.includes(1) && !pcode2.includes(1)) {
+        console.log("Line is totally visible");
+        vis = 0;
+    } else {
+        if (andOfPcode.includes(1)) {
+            console.log("Line is completely invisible");
+            vis = 1;
+        } else {
+
+            console.log("Line is partially visible");
+            vis = 2;
+        }
+    }
+
+    return vis;
+}
+
+function findAnd(pcode1, pcode2) {
+    var pcode = [];
+    for (var i = 0; i < 4; i++) {
+        if (pcode1[i] === 1 && pcode2[i] === 1) {
+            pcode[i] = 1
+        } else if (pcode1[i] != pcode2[i]) {
+            pcode[i] = 0;
+        } else if (pcode1[i] === 0 && pcode2[i] === 0) {
+            pcode[i] = 0;
+        }
+    }
+    return pcode;
+}
+
+
+
+function findOutCode(x, y) {
+    var yt = rectCoordinates[1].y;
+    var xr = rectCoordinates[1].x;
+    var yb = rectCoordinates[0].y;
+    var xl = rectCoordinates[0].x;
+
+    var pcode = [];
+    if (y > yt) {
+        pcode.push(1);
+    } else {
+        pcode.push(0);
+    }
+    if (y < yb) {
+        pcode.push(1);
+    } else {
+        pcode.push(0);
+    }
+    if (x > xr) {
+        pcode.push(1);
+    } else {
+        pcode.push(0);
+    }
+    if (x < xl) {
+        pcode.push(1);
+    } else {
+        pcode.push(0);
+    }
+
+    return pcode;
+}
