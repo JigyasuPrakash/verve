@@ -1,5 +1,5 @@
 var polygon = false;
-var eraser = false;
+//var eraser = false;
 var rectangle = false;
 var myLine = false;
 var cursor = true;
@@ -24,6 +24,8 @@ var polyCoordinates = [];
 var endPoly = false;
 var rectCoordinates = [];
 var endRect = false;
+var myLineCoordinates = [];
+var endMyLine = false;
 
 function mouseClicked() {
     x = mouseX;
@@ -47,6 +49,13 @@ function mouseClicked() {
         }
         rectCoordinates[rectCoordinates.length] = { x, y };
     }
+    if (myLine && mouseX > 0 && mouseY > 0 && mouseX < editorCanvas.width && mouseY < editorCanvas.height) {
+        if (myLineCoordinates.length > 0) {
+            myLine = false;
+            endMyLine = true;
+        }
+        myLineCoordinates[myLineCoordinates.length] = { x, y };
+    }
 
 }
 
@@ -62,9 +71,24 @@ function draw() {
         noFill();
         drawRectangle();
     }
+    if (myLine || endMyLine) {
+        stroke(0);
+        drawMyLine();
+    }
 }
 
 // Non p5 functions
+
+function drawMyLine() {
+    if (myLineCoordinates.length > 0 && !endMyLine) {
+        console.log("Runtime");
+        line(myLineCoordinates[0].x, myLineCoordinates[0].y, mouseX, mouseY);
+    }
+    if (myLineCoordinates.length === 2) {
+        line(myLineCoordinates[0].x, myLineCoordinates[0].y, myLineCoordinates[1].x, myLineCoordinates[1].y);
+    }
+}
+
 
 function drawGrid() {
     for (var x = 0; x < width; x += width / 60) {
@@ -102,7 +126,7 @@ function drawRectangle() {
 function selectMode(mode) {
     let btnCursor = document.getElementById('cursor-btn');
     let btnPolygon = document.getElementById('polygon-btn');
-    let btnEraser = document.getElementById('eraser-btn');
+    //let btnEraser = document.getElementById('eraser-btn');
     let btnRectangle = document.getElementById('rectangle-btn');
     let btnLine = document.getElementById('line-btn');
     switch (mode) {
@@ -111,31 +135,31 @@ function selectMode(mode) {
             eraser = false;
             cursor = false;
             rectangle = false;
-            inLine = false;
+            myLine = false;
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(0,255,0)';
             btnRectangle.style.background = 'rgb(255,255,255)';
             btnEraser.style.background = 'rgb(255,255,255)';
             btnLine.style.background = 'rgb(255,255,255)';
             break;
-        case 'eraser':
-            polygon = false;
-            eraser = true;
-            cursor = false;
-            rectangle = false;
-            inLine = false;
-            btnCursor.style.background = 'rgb(255,255,255)';
-            btnPolygon.style.background = 'rgb(255,255,255)';
-            btnEraser.style.background = 'rgb(0,255,0)';
-            btnRectangle.style.background = 'rgb(255,255,255)';
-            btnLine.style.background = 'rgb(255,255,255)';
-            break;
+        // case 'eraser':
+        //     polygon = false;
+        //     eraser = true;
+        //     cursor = false;
+        //     rectangle = false;
+        //     myLine = false;
+        //     btnCursor.style.background = 'rgb(255,255,255)';
+        //     btnPolygon.style.background = 'rgb(255,255,255)';
+        //     btnEraser.style.background = 'rgb(0,255,0)';
+        //     btnRectangle.style.background = 'rgb(255,255,255)';
+        //     btnLine.style.background = 'rgb(255,255,255)';
+        //     break;
         case 'cursor':
             polygon = false;
             eraser = false;
             cursor = true;
             rectangle = false;
-            inLine = false;
+            myLine = false;
             btnCursor.style.background = 'rgb(0,255,0)';
             btnPolygon.style.background = 'rgb(255,255,255)';
             btnEraser.style.background = 'rgb(255,255,255)';
@@ -147,7 +171,7 @@ function selectMode(mode) {
             eraser = false;
             cursor = false;
             rectangle = true;
-            inLine = false;
+            myLine = false;
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(255,255,255)';
             btnEraser.style.background = 'rgb(255,255,255)';
@@ -159,7 +183,7 @@ function selectMode(mode) {
             eraser = false;
             cursor = false;
             rectangle = false;
-            inLine = true;
+            myLine = true;
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(255,255,255)';
             btnEraser.style.background = 'rgb(255,255,255)';
@@ -174,5 +198,7 @@ function clearAll() {
     endPoly = false;
     rectCoordinates = [];
     endRect = false;
+    myLineCoordinates = [];
+    endMyLine = false;
     selectMode('cursor');
 }
