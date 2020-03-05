@@ -412,8 +412,6 @@ function cohen_sutherlandmidpointAlgo(x1, y1, x2, y2) {
         myLineCoordinates[0].y = y1;
         myLineCoordinates[1].x = x2;
         myLineCoordinates[1].y = y2;
-
-        drawMyLine();
     }
     return;
 }
