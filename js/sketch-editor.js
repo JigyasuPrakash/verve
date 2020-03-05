@@ -206,7 +206,7 @@ function clearAll() {
 }
 
 
-function startSimulation() {
+function startMidPoint() {
     console.log(myLineCoordinates);
     console.log(rectCoordinates);
     midpointAlgo(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
@@ -254,10 +254,11 @@ Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 };
 
+
 function findOutCode(x, y) {
     var width = rectCoordinates[1].x - rectCoordinates[0].x;
     var height = rectCoordinates[1].y - rectCoordinates[0].y;
-    
+
 
     var yt = Math.max(rectCoordinates[0].y, rectCoordinates[1].y);
     var xr = Math.max(rectCoordinates[0].x, rectCoordinates[1].x);
@@ -406,7 +407,7 @@ function midpointAlgo(x1, y1, x2, y2) {
     }
     inter = findVisibility(p1code, p2code);
     console.log(x1 + " " + y1 + " " + x2 + ' ' + y2 + ' ' + inter);
-    if (inter === 2) {
+    if (inter === 2 || inter===0) {
         console.log('drawing')
         myLineCoordinates[0].x = x1;
         myLineCoordinates[0].y = y1;
@@ -439,12 +440,18 @@ function logical(p1, p2) {
 
 //cohen sutherland
 
-function cohenSutherland() {
-    var x1 = myLineCoordinates[0].x;
-    var y1 = myLineCoordinates[0].y;
-    var x2 = myLineCoordinates[1].x;
-    var y2 = myLineCoordinates[1].y;
-    var iflag;
+
+function startCohenSutherland() {
+    console.log(myLineCoordinates);
+    console.log(rectCoordinates);
+    cohenSutherland(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
+}
+
+
+function cohenSutherland(x1, y1, x2, y2) {
+    var windowCoord = [Math.min(rectCoordinates[0].x, rectCoordinates[1].x), Math.max(rectCoordinates[0].x, rectCoordinates[1].x), Math.min(rectCoordinates[0].y, rectCoordinates[1].y), Math.max(rectCoordinates[0].y, rectCoordinates[1].y)]
+    console.log(windowCoord);
+    var iflag = 1;
     var m;
     var p1code = findOutCode(x1, y1);
     var p2code = findOutCode(x2, y2);
@@ -454,7 +461,11 @@ function cohenSutherland() {
     var tempsum;
     var sum1 = sum(p1code);
     var sum2 = sum(p2code);
-    window = [];
+    var count=0;
+
+    if (vflag === 1) {
+        return;
+    }
 
     if (x2 === x1) {
         iflag = -1;
@@ -467,40 +478,44 @@ function cohenSutherland() {
     }
 
     while (vflag === 2) {
-        for (var i = 1; i <= 5; i++) {
-            if (p1code[5 - i] === p2code[5 - i]) {
-                if (p1code[5 - i] === 0) {
-                    p1['x'] = x1;
-                    p1['y'] = y1;
+        count++;
+        for (var i = 1; i <= 4; i++) {
+            if (p1code[4 - i] != p2code[4 - i]) {
+                if (p1code[4 - i] === 0) {
+                    temp['x'] = x1;
+                    temp['y'] = y1;
                     x1 = x2;
                     y1 = y2;
                     x2 = temp['x'];
                     y2 = temp['y'];
                     tempcode = p1code;
+                    p1code = p2code;
+                    p2code = tempcode;
                     tempsum = sum1;
                     sum1 = sum2;
                     sum2 = tempsum;
                 }
                 if (iflag != -1 && i <= 2) {
-                    y1 = m * (window[i] - x1) + y1;
-                    x1 = window[i];
+                    y1 = m * (windowCoord[i-1] - x1) + y1;
+                    x1 = windowCoord[i-1];
 
                     p1code = findOutCode(x1, y1);
                     sum1 = sum(p1code);
                 }
                 if (iflag != 0 && i > 2) {
                     if (iflag != -1) {
-                        x1 = (1 / m) * (window[i] - y1) + x1;
+                        x1 = (1 / m) * (windowCoord[i-1] - y1) + x1;
                     }
-                    y1 = window[i];
+                    y1 = windowCoord[i-1];
                     p1code = findOutCode(x1, y1);
                     sum1 = (p1code);
                 }
                 vflag = findVisibility(p1code, p2code);
-
+                console.log(x1 + " " + y1 + " " + x2 + ' ' + y2 + ' ' + vflag);
                 if (vflag === 0) {
                     //draw
                     console.log('drawing')
+
                     myLineCoordinates[0].x = x1;
                     myLineCoordinates[0].y = y1;
                     myLineCoordinates[1].x = x2;
