@@ -209,7 +209,7 @@ function clearAll() {
 function startSimulation() {
     console.log(myLineCoordinates);
     console.log(rectCoordinates);
-    cohen_sutherlandmidpointAlgo(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
+    midpointAlgo(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
 }
 
 function findVisibility(pcode1, pcode2) {
@@ -264,32 +264,32 @@ function findOutCode(x, y) {
     var xl = rectCoordinates[0].x;
 
     var pcode = {};
-    var outcode=[];
+    var outcode = [];
     if (y > yt) {
-        pcode[0]=1;
+        pcode[0] = 1;
     } else {
-        pcode[0]= 0;
+        pcode[0] = 0;
     }
     if (y < yb) {
-        pcode[1]=1;
+        pcode[1] = 1;
     } else {
-        pcode[1]= 0;
+        pcode[1] = 0;
     }
     if (x > xr) {
-        pcode[2]= 1;
+        pcode[2] = 1;
     } else {
-        pcode[2]= 0;
+        pcode[2] = 0;
     }
     if (x < xl) {
-        pcode[3]=1;
+        pcode[3] = 1;
     } else {
-        pcode[3]=0;
+        pcode[3] = 0;
     }
     console.log(pcode);
-    for(var i in pcode) {
+    for (var i in pcode) {
         outcode.push(pcode[i]);
     }
-    
+
     console.log(outcode);
     return outcode;
 }
@@ -299,13 +299,12 @@ function sum(code) {
     for (var i = 0; i < 4; i++) {
         s += code[i];
     }
-    
     return s;
 }
 
 
 
-function cohen_sutherlandmidpointAlgo(x1, y1, x2, y2) {
+function midpointAlgo(x1, y1, x2, y2) {
     var p1code = findOutCode(x1, y1);
     var p2code = findOutCode(x2, y2);
 
@@ -325,7 +324,7 @@ function cohen_sutherlandmidpointAlgo(x1, y1, x2, y2) {
 
     if (vflag === 0) {
         console.log("Line is completely visible.");
-        
+
         return;
     }
     if (vflag === 1) {
@@ -404,9 +403,9 @@ function cohen_sutherlandmidpointAlgo(x1, y1, x2, y2) {
         sum2 = sum(p2code);
         vflag = findVisibility(p1code, p2code);
     }
-    inter = logical(p1code, p2code);
+    inter = findVisibility(p1code, p2code);
     console.log(x1 + " " + y1 + " " + x2 + ' ' + y2 + ' ' + inter);
-    if (inter === 0) {
+    if (inter === 2) {
         console.log('drawing')
         myLineCoordinates[0].x = x1;
         myLineCoordinates[0].y = y1;
@@ -424,4 +423,44 @@ function logical(p1, p2) {
     }
     return inter;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//cohen sutherland
+
+
+
+
+
+function topEdge() {
+    xt = ((yt - y1) / m) + x1;
+    t1.x = xt;
+    t1.y = yt;
+}
+function bottomEdge() {
+    xb = ((yb - y1) / m) + x1;
+    t1.x = xb;
+    t1.y = yb;
+}
+function leftEdge() {
+    yl = ((xl - x1) * m) + y1;
+    t1.x = xl;
+    t1.y = yl;
+}
+function rightEdge() {
+    yr = ((xr - x1) * m) + y1;
+    t1.x = xr;
+    t1.y = yr;
+}
+
 
