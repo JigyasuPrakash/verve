@@ -26,6 +26,7 @@ var rectCoordinates = [];
 var endRect = false;
 var myLineCoordinates = [];
 var endMyLine = false;
+var rectCoord = [];
 
 function mouseClicked() {
     x = mouseX;
@@ -48,6 +49,7 @@ function mouseClicked() {
             endRect = true;
         }
         rectCoordinates[rectCoordinates.length] = { x, y };
+        rectCoord[rectCoordinates.length] = { x, y };
     }
     if (myLine && mouseX > 0 && mouseY > 0 && mouseX < editorCanvas.width && mouseY < editorCanvas.height) {
         if (myLineCoordinates.length > 0) {
@@ -207,69 +209,7 @@ function clearAll() {
 function startSimulation() {
     console.log(myLineCoordinates);
     console.log(rectCoordinates);
-    cohenSutherland(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
-}
-
-
-
-function cohenSutherland(x1, y1, x2, y2) {
-    pcode1 = findOutCode(x1, y1);
-    pcode2 = findOutCode(x2, y2);
-
-    console.log(pcode1);
-    console.log(pcode2);
-
-    if (findVisibility(pcode1, pcode2) === 0) {
-        console.log('fully visible');
-        line(x1, y1, x2, y2);
-    } else if (findVisibility(pcode1, pcode2) === 2) {
-        midPointSubdivision(x1, y1, x2, y2);
-    }
-
-}
-
-
-function midPointSubdivision(x1, y1, x2, y2) {
-
-    console.log(x1 + " " + y1 + " " + x2 + " " + y2);
-    var ym;
-    var xm;
-
-    var p1 = findOutCode(x1, y1);
-    var p2 = findOutCode(x2, y2);
-
-    var v = findVisibility(p1, p2);
-    console.log(v);
-
-    switch (v) {
-        case 0:
-            clear();
-            // rect(rectCoordinates[0].x,rectCoordinates[0].y, rectCoordinates[1].x, rectCoordinates[1].y);
-            // line(x1,y1,x2,y2);
-            break;
-
-        case 1:
-            break;
-
-        case 2:
-            xm = x1 + (x2 - x1) / 2;
-            ym = y1 + (y2 - y1) / 2;
-
-            console.log("x1, y1");
-
-            midPointSubdivision(x1, y1, xm, ym);
-
-            xm = xm + 1;
-            ym = ym + 1;
-
-            console.log("x2, y2");
-
-            midPointSubdivision(xm, ym, x2, y2);
-
-            break;
-    }
-    return 0;
-
+    cohen_sutherlandmidpointAlgo(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
 }
 
 function findVisibility(pcode1, pcode2) {
@@ -310,35 +250,174 @@ function findAnd(pcode1, pcode2) {
     return pcode;
 }
 
-
+Array.prototype.insert = function (index, item) {
+    this.splice(index, 0, item);
+};
 
 function findOutCode(x, y) {
-    var yt = rectCoordinates[1].y;
-    var xr = rectCoordinates[1].x;
-    var yb = rectCoordinates[0].y;
+    var width = rectCoordinates[1].x - rectCoordinates[0].x;
+    var height = rectCoordinates[1].y - rectCoordinates[0].y;
+
+    var yt = rectCoordinates[0].y;
+    var xr = rectCoordinates[0].x+width;
+    var yb = rectCoordinates[1].y;
     var xl = rectCoordinates[0].x;
 
     var pcode = [];
     if (y > yt) {
-        pcode.push(1);
+        pcode.insert(0, 1);
     } else {
-        pcode.push(0);
+        pcode.insert(0, 0);
     }
     if (y < yb) {
-        pcode.push(1);
+        pcode.insert(1, 1);
     } else {
-        pcode.push(0);
+        pcode.insert(1, 0);
     }
     if (x > xr) {
-        pcode.push(1);
+        pcode.insert(2, 1);
     } else {
-        pcode.push(0);
+        pcode.insert(2, 0);
     }
     if (x < xl) {
-        pcode.push(1);
+        pcode.insert(3, 1);
     } else {
-        pcode.push(0);
+        pcode.insert(3, 0);
     }
-
+    console.log(pcode);
     return pcode;
 }
+
+function sum(code) {
+    var s = 0;
+    for (var i = 0; i < 4; i++) {
+        s += code[i];
+    }
+    
+    return s;
+}
+
+
+
+function cohen_sutherlandmidpointAlgo(x1, y1, x2, y2) {
+    var p1code = findOutCode(x1, y1);
+    var p2code = findOutCode(x2, y2);
+
+    var savep1code = [];
+
+    var sum1 = sum(p1code);
+    var sum2 = sum(p2code);
+
+    var savep1 = {};
+    var savep2 = {};
+    var temp = {};
+    var tempsum1;
+
+    var xm, ym;
+
+    var vflag = findVisibility(p1code, p2code);
+
+    if (vflag === 0) {
+        console.log("Line is completely visible.");
+        
+        return;
+    }
+    if (vflag === 1) {
+        console.log("Line is invisible..");
+        return;
+    }
+    error = 1;
+    for (var i = 1; i <= 2; i++) {
+        if (i === 1 && sum1 === 0) {
+            savep2['x'] = x1;
+            savep2['y'] = y1;
+            temp['x'] = x2;
+            temp['y'] = y2;
+            x2 = x1;
+            y2 = y1;
+            x1 = temp['x'];
+            y1 = temp['y'];
+            i = 2;
+        }
+        if (i === 1 && sum2 === 0) {
+            temp['x'] = x2;
+            temp['y'] = y2;
+            x2 = x1;
+            y2 = y1;
+            x1 = temp['x'];
+            y1 = temp['y'];
+            savep2['x'] = x1;
+            savep2['y'] = y1;
+            i = 2;
+        }
+        savep1['x'] = x1;
+        savep1['y'] = x2;
+        tempsum1 = sum1;
+        savep1code = p1code;
+        while (Math.abs(x2 - x1) > error || Math.abs(y2 - y1) > error) {
+            xm = (x1 + x2) / 2;
+            ym = (y1 + y2) / 2;
+            console.log(xm + ' ' + ym);
+            temp['x'] = x1;
+            temp['y'] = y1;
+            x1 = xm;
+            y1 = ym;
+            p1code = findOutCode(x1, y1);
+            sum1 = sum(p1code);
+            vflag = findVisibility(p1code, p2code);
+            if (vflag === 1) {
+                x1 = temp['x'];
+                y1 = temp['y'];
+                x2 = xm;
+                y2 = ym;
+                p2code = p1code;
+                sum2 = sum1;
+                p1code = findOutCode(x1, y1);
+                sum1 = sum(p1code);
+            }
+        }
+        if (i == 1) {
+            savep2['x'] = xm;
+            savep2['y'] = ym;
+            x1 = xm;
+            y1 = ym;
+            x2 = savep1['x'];
+            y2 = savep1['y'];
+            sum2 = tempsum1;
+            p2code = savep1code;
+        }
+        else {
+            x1 = xm;
+            y1 = ym;
+            x2 = savep2['x'];
+            y2 = savep2['y'];
+        }
+        p1code = findOutCode(x1, y1);
+        p2code = findOutCode(x2, y2);
+        sum1 = sum(p1code);
+        sum2 = sum(p2code);
+        vflag = findVisibility(p1code, p2code);
+    }
+    inter = logical(p1code, p2code);
+    console.log(x1 + " " + y1 + " " + x2 + ' ' + y2 + ' ' + inter);
+    if (inter === 0) {
+        console.log('drawing')
+        myLineCoordinates[0].x = x1;
+        myLineCoordinates[0].y = y1;
+        myLineCoordinates[1].x = x2;
+        myLineCoordinates[1].y = y2;
+
+        drawMyLine();
+    }
+    return;
+}
+
+
+function logical(p1, p2) {
+    var inter = 0;
+    for (var i = 0; i < 4; i++) {
+        inter += ((p1[i] + p2[i]) / 2);
+    }
+    return inter;
+}
+
