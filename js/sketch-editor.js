@@ -259,33 +259,39 @@ function findOutCode(x, y) {
     var height = rectCoordinates[1].y - rectCoordinates[0].y;
 
     var yt = rectCoordinates[0].y;
-    var xr = rectCoordinates[0].x+width;
+    var xr = rectCoordinates[1].x;
     var yb = rectCoordinates[1].y;
     var xl = rectCoordinates[0].x;
 
-    var pcode = [];
+    var pcode = {};
+    var outcode=[];
     if (y > yt) {
-        pcode.insert(0, 1);
+        pcode[0]=1;
     } else {
-        pcode.insert(0, 0);
+        pcode[0]= 0;
     }
     if (y < yb) {
-        pcode.insert(1, 1);
+        pcode[1]=1;
     } else {
-        pcode.insert(1, 0);
+        pcode[1]= 0;
     }
     if (x > xr) {
-        pcode.insert(2, 1);
+        pcode[2]= 1;
     } else {
-        pcode.insert(2, 0);
+        pcode[2]= 0;
     }
     if (x < xl) {
-        pcode.insert(3, 1);
+        pcode[3]=1;
     } else {
-        pcode.insert(3, 0);
+        pcode[3]=0;
     }
     console.log(pcode);
-    return pcode;
+    for(var i in pcode) {
+        outcode.push(pcode[i]);
+    }
+    
+    console.log(outcode);
+    return outcode;
 }
 
 function sum(code) {
@@ -351,7 +357,7 @@ function cohen_sutherlandmidpointAlgo(x1, y1, x2, y2) {
             i = 2;
         }
         savep1['x'] = x1;
-        savep1['y'] = x2;
+        savep1['y'] = y1;
         tempsum1 = sum1;
         savep1code = p1code;
         while (Math.abs(x2 - x1) > error || Math.abs(y2 - y1) > error) {
