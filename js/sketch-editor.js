@@ -257,11 +257,12 @@ Array.prototype.insert = function (index, item) {
 function findOutCode(x, y) {
     var width = rectCoordinates[1].x - rectCoordinates[0].x;
     var height = rectCoordinates[1].y - rectCoordinates[0].y;
+    
 
-    var yt = rectCoordinates[0].y;
-    var xr = rectCoordinates[1].x;
-    var yb = rectCoordinates[1].y;
-    var xl = rectCoordinates[0].x;
+    var yt = Math.max(rectCoordinates[0].y, rectCoordinates[1].y);
+    var xr = Math.max(rectCoordinates[0].x, rectCoordinates[1].x);
+    var yb = Math.min(rectCoordinates[0].y, rectCoordinates[1].y);
+    var xl = Math.min(rectCoordinates[0].x, rectCoordinates[1].x);
 
     var pcode = {};
     var outcode = [];
