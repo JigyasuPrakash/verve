@@ -220,14 +220,16 @@ function findVisibility(pcode1, pcode2) {
     console.log(andOfPcode);
 
     if (!pcode1.includes(1) && !pcode2.includes(1)) {
+        
         console.log("Line is totally visible");
         vis = 0;
     } else {
         if (andOfPcode.includes(1)) {
+            
             console.log("Line is completely invisible");
             vis = 1;
         } else {
-
+            
             console.log("Line is partially visible");
             vis = 2;
         }
@@ -325,17 +327,22 @@ function midpointAlgo(x1, y1, x2, y2) {
     var vflag = findVisibility(p1code, p2code);
 
     if (vflag === 0) {
+        $('#steps').append(`<p>Line is totally visible</p>`);
         console.log("Line is completely visible.");
 
         return;
     }
     if (vflag === 1) {
+        $('#steps').append(`<p>Line is totally invisible</p>`);
         console.log("Line is invisible..");
         return;
     }
+    $('#steps').append(`<p>Line is partially visible</p>`);
     error = 1;
     for (var i = 1; i <= 2; i++) {
         if (i === 1 && sum1 === 0) {
+            $('#steps').append(`<br><p>P1 = (${Math.ceil(x1)}, ${Math.ceil(y1)}); P2 = (${Math.ceil(x2)}, ${Math.ceil(y2)})</p>`);
+            $('#steps').append(`<br><p>P1 is inside switch P1 and P2</p>`);
             savep2['x'] = x1;
             savep2['y'] = y1;
             temp['x'] = x2;
@@ -347,6 +354,8 @@ function midpointAlgo(x1, y1, x2, y2) {
             i = 2;
         }
         if (i === 1 && sum2 === 0) {
+            $('#steps').append(`<br><p>P1 = (${Math.ceil(x1)}, ${Math.ceil(y1)}); P2 = (${Math.ceil(x2)}, ${Math.ceil(y2)})</p>`);
+            $('#steps').append(`<br><p>P2 is inside switch P1 and P2</p>`);
             temp['x'] = x2;
             temp['y'] = y2;
             x2 = x1;
@@ -357,6 +366,7 @@ function midpointAlgo(x1, y1, x2, y2) {
             savep2['y'] = y1;
             i = 2;
         }
+        $('#steps').append(`<br>New values<br><p>P1 = (${Math.ceil(x1)}, ${Math.ceil(y1)}); P2 = (${Math.ceil(x2)}, ${Math.ceil(y2)})</p>`);
         savep1['x'] = x1;
         savep1['y'] = y1;
         tempsum1 = sum1;
@@ -407,7 +417,7 @@ function midpointAlgo(x1, y1, x2, y2) {
     }
     inter = findVisibility(p1code, p2code);
     console.log(x1 + " " + y1 + " " + x2 + ' ' + y2 + ' ' + inter);
-    if (inter === 2 || inter===0) {
+    if (inter != 1) {
         console.log('drawing')
         myLineCoordinates[0].x = x1;
         myLineCoordinates[0].y = y1;
