@@ -23,6 +23,11 @@ Also the Sutherland Cohen subdivision line clipping algorithm requires the calcu
 The strength of this algorithm over the Cohen-Sutherland algorithm is that it requires no floating point arithmetic to find the point of intersection with the line and the clip boundary. The midpoint subdivision algorithm clips a line by finding the endpoints of the visible portion of the line segment. Each endpoint can be found by an identical process and given appropriate hardware, this can be done in parallel for both endpoints. 
 
 Like other algorithm, initially the line is tested for visibility. If line is completely visible it is drawn and if it is completely invisible it is rejected. If line is partially visible then it is subdivided in two equal parts. The visibility tests are then applied to each half. This subdivision process is repeated until we get completely visible and completely invisible line segments. This is illustrated in figure (k) below
+
+![Snap](https://github.com/JigyasuPrakash/verve/blob/master/images/5.png)
+
+![Snap](https://github.com/JigyasuPrakash/verve/blob/master/images/3.png)
+
   
 As shown in the figure (k), line P1 P2 is partially visible. It is subdivided in two equal Parts P1 P3 and P3 P2 (see Fig. k (b)). Both the line segments are tested for visibility and found to be partially visible. Both line segments are then subdivided in two equal parts to get midpoints P4 and P5 (see Fig. k (c)). It is observed that line segments P1 P4 and P5 P2 are completely invisible and hence rejected. However, line segment P3 P5 is completely visible and hence drawn. The remaining line segment P4 P3 is still partially visible. It is then subdivided to get midpoint P6. It is observed that P6 P3 is completely visible whereas P4 P6 is partially visible. Thus P6 P3 line segment is drawn and P4 P6 line segment is further subdivided into equal parts to get midpoint P7. Now, it is observed that line segment P4 P7 is completely invisible and line segment P7 P6 is completely visible (see Fig. k (f)), and there is no further partially visible segment.
 
@@ -50,26 +55,6 @@ As shown in the figure (k), line P1 P2 is partially visible. It is subdivided in
          through 5 for both subdivided line segments until you get completely visible 
          and completely invisible line segments.
       6. Stop.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -102,7 +87,6 @@ There are three possible cases for any given line.
 2.	Completely outside the given rectangle : Both endpoints share at least one outside region which implies that the line does not cross the visible region. (bitwise AND of endpoints != 0).
 3.	Partially inside the window : Both endpoints are in different regions. In this case, the algorithm finds one of the two points that is outside the rectangular region. The intersection of the line from outside point and rectangular window becomes new corner point and the algorithm repeats
  
- ![Snap](https://github.com/JigyasuPrakash/verve/blob/master/images/3.png)
 
  
 ### Pseudo Code:
