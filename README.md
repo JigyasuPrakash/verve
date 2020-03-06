@@ -14,12 +14,16 @@ Midpoint subdivision algorithm is an extension of the Cyrus Beck algorithm.
 
 This algorithm is mainly used to compute visible areas of lines that are present in the view port are of the sector or the image.
 
+It requires no floating point arithmetic to find the point of intersection with the line and the clip boundary. 
 
-It requires no floating point arithmetic to find the point of intersection with the line and the clip boundary. The midpoint subdivision algorithm clips a line by finding the endpoints of the visible portion of the line segment. Each endpoint can be found by an identical process and given appropriate hardware, this can be done in parallel for both endpoints. 
+The midpoint subdivision algorithm clips a line by finding the endpoints of the visible portion of the line segment.
+
+Each endpoint can be found by an identical process and given appropriate hardware, this can be done in parallel for both endpoints. 
 
 Like other algorithm, initially the line is tested for visibility.
 
 If line is completely visible it is drawn and if it is completely invisible it is rejected. If line is partially visible then it is subdivided in two equal parts. 
+
 The visibility tests are then applied to each half. 
 This subdivision process is repeated until we get completely visible and completely invisible line segments.
 
