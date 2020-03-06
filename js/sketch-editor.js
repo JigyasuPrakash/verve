@@ -141,7 +141,7 @@ function selectMode(mode) {
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(0,255,0)';
             btnRectangle.style.background = 'rgb(255,255,255)';
-            btnEraser.style.background = 'rgb(255,255,255)';
+            //btnEraser.style.background = 'rgb(255,255,255)';
             btnLine.style.background = 'rgb(255,255,255)';
             break;
         // case 'eraser':
@@ -164,7 +164,7 @@ function selectMode(mode) {
             myLine = false;
             btnCursor.style.background = 'rgb(0,255,0)';
             btnPolygon.style.background = 'rgb(255,255,255)';
-            btnEraser.style.background = 'rgb(255,255,255)';
+            //btnEraser.style.background = 'rgb(255,255,255)';
             btnRectangle.style.background = 'rgb(255,255,255)';
             btnLine.style.background = 'rgb(255,255,255)';
             break;
@@ -176,7 +176,7 @@ function selectMode(mode) {
             myLine = false;
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(255,255,255)';
-            btnEraser.style.background = 'rgb(255,255,255)';
+            //btnEraser.style.background = 'rgb(255,255,255)';
             btnRectangle.style.background = 'rgb(0,255,0)';
             btnLine.style.background = 'rgb(255,255,255)';
             break;
@@ -188,7 +188,7 @@ function selectMode(mode) {
             myLine = true;
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(255,255,255)';
-            btnEraser.style.background = 'rgb(255,255,255)';
+            //btnEraser.style.background = 'rgb(255,255,255)';
             btnRectangle.style.background = 'rgb(255,255,255)';
             btnLine.style.background = 'rgb(0,255,0)';
             break;
