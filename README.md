@@ -93,7 +93,8 @@ If y is less than y_min then bit number 3 is set.
 If y is greater than y_max then bit number 4 is set
 
  
- 
+![Snap](https://github.com/JigyasuPrakash/verve/blob/master/images/2.png)
+
  
  
 There are three possible cases for any given line.
@@ -101,7 +102,7 @@ There are three possible cases for any given line.
 2.	Completely outside the given rectangle : Both endpoints share at least one outside region which implies that the line does not cross the visible region. (bitwise AND of endpoints != 0).
 3.	Partially inside the window : Both endpoints are in different regions. In this case, the algorithm finds one of the two points that is outside the rectangular region. The intersection of the line from outside point and rectangular window becomes new corner point and the algorithm repeats
  
- ![Snap](https://github.com/VedantKhairnar/The-Maze-Runner/blob/master/Maze.PNG)
+ ![Snap](https://github.com/JigyasuPrakash/verve/blob/master/images/3.png)
 
  
 ### Pseudo Code:
