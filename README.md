@@ -26,30 +26,30 @@ Like other algorithm, initially the line is tested for visibility. If line is co
   
 As shown in the figure (k), line P1 P2 is partially visible. It is subdivided in two equal Parts P1 P3 and P3 P2 (see Fig. k (b)). Both the line segments are tested for visibility and found to be partially visible. Both line segments are then subdivided in two equal parts to get midpoints P4 and P5 (see Fig. k (c)). It is observed that line segments P1 P4 and P5 P2 are completely invisible and hence rejected. However, line segment P3 P5 is completely visible and hence drawn. The remaining line segment P4 P3 is still partially visible. It is then subdivided to get midpoint P6. It is observed that P6 P3 is completely visible whereas P4 P6 is partially visible. Thus P6 P3 line segment is drawn and P4 P6 line segment is further subdivided into equal parts to get midpoint P7. Now, it is observed that line segment P4 P7 is completely invisible and line segment P7 P6 is completely visible (see Fig. k (f)), and there is no further partially visible segment.
 
-Midpoint Subdivision Algorithm
+### Midpoint Subdivision Algorithm
 
-  1. Read two endpoints of the line say P1(x1, y1) and P2(x2, y2).
-  2. Read two corners left-top and right-bottom) of the window, say (Wx1, Wy1, and
-     Wx2,Wy2).
-  3. Assign region codes for 11111 *S mbg following steps :
-     Initialise code with bits 0000
-     Set Bit 1 - if (x < Wx1) 
-     Set Bit 2 - If (x > Wx2) 
-     Set Bit 3 - if (y < Wy1) 
-     Set Bit 4 - if (y > Wy2)
+      1. Read two endpoints of the line say P1(x1, y1) and P2(x2, y2).
+      2. Read two corners left-top and right-bottom) of the window, say (Wx1, Wy1, and
+         Wx2,Wy2).
+      3. Assign region codes for 11111 *S mbg following steps :
+         Initialise code with bits 0000
+         Set Bit 1 - if (x < Wx1) 
+         Set Bit 2 - If (x > Wx2) 
+         Set Bit 3 - if (y < Wy1) 
+         Set Bit 4 - if (y > Wy2)
 
-  4. Check for visibility of line
-     a) If region codes for both endpoints are zero then the line is completely 
-       visible. Hence draw the line and go to step 6.
-     b) If region codes for endpoints are not zero and the logical ANDing of them 
-       is also nonzero then the line is completely invisible, so reject the line
-       and go to step 6.
-     c) If region codes for two endpoints do not satisfy the conditions in 4a) and 
-       4b) the line is partially visible.
-  5. Divide the partially visible line segment in equal parts and repeat steps 3 
-     through 5 for both subdivided line segments until you get completely visible 
-     and completely invisible line segments.
-  6. Stop.
+      4. Check for visibility of line
+         a) If region codes for both endpoints are zero then the line is completely 
+           visible. Hence draw the line and go to step 6.
+         b) If region codes for endpoints are not zero and the logical ANDing of them 
+           is also nonzero then the line is completely invisible, so reject the line
+           and go to step 6.
+         c) If region codes for two endpoints do not satisfy the conditions in 4a) and 
+           4b) the line is partially visible.
+      5. Divide the partially visible line segment in equal parts and repeat steps 3 
+         through 5 for both subdivided line segments until you get completely visible 
+         and completely invisible line segments.
+      6. Stop.
 
 
 
