@@ -8,6 +8,9 @@
 <img src="https://img.shields.io/badge/PRs-welcome-informational">
 </div>
 
+![Snap](https://github.com/JigyasuPrakash/verve/blob/master/images/verve.png)
+
+
 ## Midpoint Subdivision Algorithm
 
 Midpoint subdivision algorithm is an extension of the Cyrus Beck algorithm.
@@ -119,6 +122,10 @@ There are three possible cases for any given line.
 
 
 
+# Developers:
 
+  => Ashlesh Mahule
+  => Jigyasu Prakash
+  => Vedant Khairnar
 
 
