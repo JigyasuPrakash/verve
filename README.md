@@ -125,7 +125,9 @@ There are three possible cases for any given line.
 # Developers:
 
   => Ashlesh Mahule
+  
   => Jigyasu Prakash
+  
   => Vedant Khairnar
 
 
