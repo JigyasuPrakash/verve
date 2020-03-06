@@ -2,7 +2,6 @@
 
 <div align="center">
 <img src="https://img.shields.io/github/license/JigyasuPrakash/verve">	
-<img src="https://www.codefactor.io/repository/github/JigyasuPrakash/verve/badge/master"/>
 <img src="https://img.shields.io/github/stars/JigyasuPrakash/verve">
 <img src="https://img.shields.io/github/forks/JigyasuPrakash/verveI">
 <img src="https://img.shields.io/github/issues/JigyasuPrakash/verve">
