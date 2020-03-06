@@ -568,40 +568,105 @@ function rightEdge() {
 
 //cyrus beck
 
+
+
 function startCyrusBeck() {
     cyrusBeck(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
 }
 
-function cyrusBeck(x1,y1,x2,y2) {
-    var k=polyCoordinates.length;
-    var d=[x2-x1,y2-y1];
-    var f=polyCoordinates;
-    var normals;
-    var w,mi,ni;
+function cyrusBeck(x1, y1, x2, y2) {
+    var k = polyCoordinates.length;
+    var d = [x2 - x1, y2 - y1];
+    var f = polyCoordinates;
+    var normals = [];
+    var w, mi, ni;
+    mi = findSlopes();
+    var n = polyCoordinates.length;
+    var points = [];
+    var tl = 0;
+    var tu = 1;
+    var Ddotn, Wdotn, t;
 
-    for(var i=0; i<k;i++) {
-        
-        ni=[];
+    //finding normals
+    for (var i = 0; i < n; i++) {
+        normals.push([polyCoordinates[(i) % n].y - polyCoordinates[(i + 1) % n].y, [polyCoordinates[(i + 1) % n].x - polyCoordinates[i % n].x]]);
     }
 
     console.log(polyCoordinates);
 
-    for(var i=0; i<k;i++) {
-        w=[x1-f[i].x, y1-f[i].y];
+    for (var i = 0; i < k; i++) {
+        w = [x1 - f[i].x, y1 - f[i].y];
 
+        Ddotn = dotProduct(d, normals[i]);
+        Wdotn = dotProduct(w, normals[i]);
 
+        if (Ddotn != 0) {
+            t = -Wdotn / Ddotn;
 
+            if (Ddotn > 0) {
+                if (t > 1) {
+                    return;
+                }
+                else {
+                    tl = Math.max(t, tl);
+                }
+            }
+            else {
+                if (t < 0) {
+                    return;
+                }
+                else {
+                    tu = Math.min(t, tu);
+                }
+            }
+        }
+        else {
+            if (Wdotn < 0) {
+                return;
+            }
+        }
+    }
+    if (tl <= tu) {
+        myLineCoordinates[0].x = x1 + (x2 - x1) * tl;
+        myLineCoordinates[0].y = y1 + (y2 - y1) * tl;
+        myLineCoordinates[1].x = x1 + (x2 - x1) * tu;
+        myLineCoordinates[1].y = y1 + (y2 - y1) * tu;
     }
 
 }
 
 
+function findSlopes() {
+    var mi;
+    var m = [];
+    for (var i; i < polyCoordinates.length - 1; i++) {
+        try {
+            mi = (polyCoordinates[i + 1].y - polyCoordinates[i].y) / (polyCoordinates[i + 1].x - polyCoordinates[i].x);
+            m.push(mi);
+        }
+        catch (err) {
+            if (polyCoordinates[i + 1].x == polyCoordinates[i].x) {
+                m.push(null);
+            }
+        }
+    }
+    try {
+        m.push((polyCoordinates[polyCoordinates.length - 1].y - polyCoordinates[0].y) / (polyCoordinates[polyCoordinates.length].x - polyCoordinates[0].x));
+    }
+    catch (err) {
+        if (polyCoordinates[polyCoordinates.length - 1].x == polyCoordinates[0].x) {
+            m.push(null);
+        }
+    }
+    return m;
+}
 
-function dotProduct(p1,p2) {
-    var res=0;
 
-    for(var i=0;i<2;i++) {
-        res+=p1[i]*p2[i];
+function dotProduct(p1, p2) {
+    var res = 0;
+
+    for (var i = 0; i < 2; i++) {
+        res += p1[i] * p2[i];
     }
 
     return res;
