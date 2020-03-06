@@ -141,7 +141,7 @@ function selectMode(mode) {
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(0,255,0)';
             btnRectangle.style.background = 'rgb(255,255,255)';
-            //btnEraser.style.background = 'rgb(255,255,255)';
+            btnEraser.style.background = 'rgb(255,255,255)';
             btnLine.style.background = 'rgb(255,255,255)';
             break;
         // case 'eraser':
@@ -164,7 +164,7 @@ function selectMode(mode) {
             myLine = false;
             btnCursor.style.background = 'rgb(0,255,0)';
             btnPolygon.style.background = 'rgb(255,255,255)';
-            //btnEraser.style.background = 'rgb(255,255,255)';
+            btnEraser.style.background = 'rgb(255,255,255)';
             btnRectangle.style.background = 'rgb(255,255,255)';
             btnLine.style.background = 'rgb(255,255,255)';
             break;
@@ -176,7 +176,7 @@ function selectMode(mode) {
             myLine = false;
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(255,255,255)';
-            //btnEraser.style.background = 'rgb(255,255,255)';
+            btnEraser.style.background = 'rgb(255,255,255)';
             btnRectangle.style.background = 'rgb(0,255,0)';
             btnLine.style.background = 'rgb(255,255,255)';
             break;
@@ -188,7 +188,7 @@ function selectMode(mode) {
             myLine = true;
             btnCursor.style.background = 'rgb(255,255,255)';
             btnPolygon.style.background = 'rgb(255,255,255)';
-            //btnEraser.style.background = 'rgb(255,255,255)';
+            btnEraser.style.background = 'rgb(255,255,255)';
             btnRectangle.style.background = 'rgb(255,255,255)';
             btnLine.style.background = 'rgb(0,255,0)';
             break;
@@ -220,16 +220,16 @@ function findVisibility(pcode1, pcode2) {
     console.log(andOfPcode);
 
     if (!pcode1.includes(1) && !pcode2.includes(1)) {
-        
+
         console.log("Line is totally visible");
         vis = 0;
     } else {
         if (andOfPcode.includes(1)) {
-            
+
             console.log("Line is completely invisible");
             vis = 1;
         } else {
-            
+
             console.log("Line is partially visible");
             vis = 2;
         }
@@ -252,9 +252,6 @@ function findAnd(pcode1, pcode2) {
     return pcode;
 }
 
-Array.prototype.insert = function (index, item) {
-    this.splice(index, 0, item);
-};
 
 
 function findOutCode(x, y) {
@@ -340,7 +337,8 @@ function midpointAlgo(x1, y1, x2, y2) {
     $('#steps').append(`<p>Line is partially visible</p>`);
     error = 1;
     for (var i = 1; i <= 2; i++) {
-        if (i === 1 && sum1 === 0) {
+        console.log(sum1 + ' ' + sum2);
+        if (i === 1 && !p1code.includes(1)) {
             $('#steps').append(`<br><p>P1 = (${Math.ceil(x1)}, ${Math.ceil(y1)}); P2 = (${Math.ceil(x2)}, ${Math.ceil(y2)})</p>`);
             $('#steps').append(`<br><p>P1 is inside switch P1 and P2</p>`);
             savep2['x'] = x1;
@@ -353,7 +351,7 @@ function midpointAlgo(x1, y1, x2, y2) {
             y1 = temp['y'];
             i = 2;
         }
-        if (i === 1 && sum2 === 0) {
+        if (i === 1 && !p2code.includes(1)) {
             $('#steps').append(`<br><p>P1 = (${Math.ceil(x1)}, ${Math.ceil(y1)}); P2 = (${Math.ceil(x2)}, ${Math.ceil(y2)})</p>`);
             $('#steps').append(`<br><p>P2 is inside switch P1 and P2</p>`);
             temp['x'] = x2;
@@ -393,7 +391,7 @@ function midpointAlgo(x1, y1, x2, y2) {
                 sum1 = sum(p1code);
             }
         }
-        if (i == 1) {
+        if (i === 1) {
             savep2['x'] = xm;
             savep2['y'] = ym;
             x1 = xm;
@@ -417,7 +415,7 @@ function midpointAlgo(x1, y1, x2, y2) {
     }
     inter = findVisibility(p1code, p2code);
     console.log(x1 + " " + y1 + " " + x2 + ' ' + y2 + ' ' + inter);
-    if (inter != 1) {
+    if (inter === 0 || inter === 2) {
         console.log('drawing')
         myLineCoordinates[0].x = x1;
         myLineCoordinates[0].y = y1;
@@ -471,7 +469,7 @@ function cohenSutherland(x1, y1, x2, y2) {
     var tempsum;
     var sum1 = sum(p1code);
     var sum2 = sum(p2code);
-    var count=0;
+    var count = 0;
 
     if (vflag === 1) {
         return;
@@ -506,17 +504,17 @@ function cohenSutherland(x1, y1, x2, y2) {
                     sum2 = tempsum;
                 }
                 if (iflag != -1 && i <= 2) {
-                    y1 = m * (windowCoord[i-1] - x1) + y1;
-                    x1 = windowCoord[i-1];
+                    y1 = m * (windowCoord[i - 1] - x1) + y1;
+                    x1 = windowCoord[i - 1];
 
                     p1code = findOutCode(x1, y1);
                     sum1 = sum(p1code);
                 }
                 if (iflag != 0 && i > 2) {
                     if (iflag != -1) {
-                        x1 = (1 / m) * (windowCoord[i-1] - y1) + x1;
+                        x1 = (1 / m) * (windowCoord[i - 1] - y1) + x1;
                     }
-                    y1 = windowCoord[i-1];
+                    y1 = windowCoord[i - 1];
                     p1code = findOutCode(x1, y1);
                     sum1 = (p1code);
                 }
@@ -566,3 +564,45 @@ function rightEdge() {
 }
 
 
+
+
+//cyrus beck
+
+function startCyrusBeck() {
+    cyrusBeck(myLineCoordinates[0]['x'], myLineCoordinates[0]['y'], myLineCoordinates[1]['x'], myLineCoordinates[1]['y']);
+}
+
+function cyrusBeck(x1,y1,x2,y2) {
+    var k=polyCoordinates.length;
+    var d=[x2-x1,y2-y1];
+    var f=polyCoordinates;
+    var normals;
+    var w,mi,ni;
+
+    for(var i=0; i<k;i++) {
+        
+        ni=[];
+    }
+
+    console.log(polyCoordinates);
+
+    for(var i=0; i<k;i++) {
+        w=[x1-f[i].x, y1-f[i].y];
+
+
+
+    }
+
+}
+
+
+
+function dotProduct(p1,p2) {
+    var res=0;
+
+    for(var i=0;i<2;i++) {
+        res+=p1[i]*p2[i];
+    }
+
+    return res;
+}
