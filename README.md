@@ -73,11 +73,10 @@ As shown in the figure (k), line P1 P2 is partially visible. It is subdivided in
 
 
 
-
+## Cohen-Sutherland algorithm
 
 Cohen-Sutherland algorithm divides a two-dimensional space into 9 regions and then efficiently determines the lines and portions of lines that are inside the given rectangular area.
 The algorithm can be outlines as follows:-
-
 
 
 Nine regions are created, eight "outside" regions and one 
@@ -95,10 +94,15 @@ If y is greater than y_max then bit number 4 is set
 
  
  
+ 
+ 
 There are three possible cases for any given line.
 1.	Completely inside the given rectangle : Bitwise OR of region of two end points of line is 0 (Both points are inside the rectangle)
 2.	Completely outside the given rectangle : Both endpoints share at least one outside region which implies that the line does not cross the visible region. (bitwise AND of endpoints != 0).
 3.	Partially inside the window : Both endpoints are in different regions. In this case, the algorithm finds one of the two points that is outside the rectangular region. The intersection of the line from outside point and rectangular window becomes new corner point and the algorithm repeats
+ 
+ ![Snap](https://github.com/VedantKhairnar/The-Maze-Runner/blob/master/Maze.PNG)
+
  
 ### Pseudo Code:
 
