@@ -1,12 +1,12 @@
 # Verve
-
+https://github.com/JigyasuPrakash/verve
 <div align="center">
-<img src="https://img.shields.io/github/license/sushantPatrikar/flappybirdAI">	
-<img src="https://www.codefactor.io/repository/github/sushantpatrikar/flappybirdai/badge/master"/>
-<img src="https://img.shields.io/github/issues-pr/sushantPatrikar/flappyBirdAI">
-<img src="https://img.shields.io/github/stars/sushantPatrikar/flappybirdAI">
-<img src="https://img.shields.io/github/forks/sushantPatrikar/flappybirdAI">
-<img src="https://img.shields.io/github/issues/sushantPatrikar/flappybirdAI">
+<img src="https://img.shields.io/github/license/JigyasuPrakash/verve">	
+<img src="https://www.codefactor.io/repository/github/JigyasuPrakash/verve/badge/master"/>
+<img src="https://img.shields.io/github/issues-pr/JigyasuPrakash/verve">
+<img src="https://img.shields.io/github/stars/JigyasuPrakash/verve">
+<img src="https://img.shields.io/github/forks/JigyasuPrakash/verveI">
+<img src="https://img.shields.io/github/issues/JigyasuPrakash/verve">
 <img src="https://img.shields.io/badge/PRs-welcome-informational">
 </div>
 
