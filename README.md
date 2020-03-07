@@ -136,9 +136,13 @@ Now to find the intersection point with the clipping window, we calculate the va
 ![Snap](https://github.com/JigyasuPrakash/verve/blob/master/images/cba.png)
 
 Calculate n*(p(t)-pE) :
+
 if < 0, vector pointed towards interior;
+
 if = 0, vector pointed parallel to plane containing p;
+
 if > 0, vector pointed away from interior.
+
 Here n stands for normal of the current clipping plane (pointed away from interior).
 By this we select the point of intersection of line and clipping window where (dot product is 0) and hence clip the line.
 
