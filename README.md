@@ -128,7 +128,7 @@ There are three possible cases for any given line.
 The Cyrus–Beck algorithm is a generalized line clipping algorithm. It was designed to be more efficient than the Cohen–Sutherland algorithm, which uses repetitive clipping. Cyrus–Beck is a general algorithm and can be used with a convex polygon clipping window, unlike Sutherland–Cohen, which can be used only on a rectangular clipping area.
 
 Here the parametric equation of a line in the view plane is
-       P(t) = tP1 ± (1 — t)Po
+       P(t) = tP1 + (1 — t)Po
        where  0 <= t <= 1.
 
 Now to find the intersection point with the clipping window, we calculate the value of the dot product. Let pE be a point on the clipping plane E.
