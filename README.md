@@ -2,10 +2,10 @@
 - Live Project Available <a href="http://itsjigyasu.me/verve/">here</a>.
 
 <div align="center">
-<img src="https://img.shields.io/github/license/JigyasuPrakash/verve">	
-<img src="https://img.shields.io/github/stars/JigyasuPrakash/verve">
-<img src="https://img.shields.io/github/forks/JigyasuPrakash/verve">
-<img src="https://img.shields.io/github/issues/JigyasuPrakash/verve">
+<img src="https://img.shields.io/github/license/JigyasuPrakash/verve">&nbsp;
+<img src="https://img.shields.io/github/stars/JigyasuPrakash/verve">&nbsp;
+<img src="https://img.shields.io/github/forks/JigyasuPrakash/verve">&nbsp;
+<img src="https://img.shields.io/github/issues/JigyasuPrakash/verve">&nbsp;
 <img src="https://img.shields.io/badge/PRs-welcome-informational">
 </div>
 
