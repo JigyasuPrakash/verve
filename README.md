@@ -1,5 +1,5 @@
 # Verve
-- Live Project Available <a href="http://itsjigyasu.me/verve/">here</a>.
+- Live Project Available <a href="https://projects.itsjigyasu.me/verve/">here</a>.
 
 <div align="center">
 <img src="https://img.shields.io/github/license/JigyasuPrakash/verve">&nbsp;
